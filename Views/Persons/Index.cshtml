@@ -1,0 +1,555 @@
+﻿@{
+    ViewBag.PageTitle = "Persons";
+    Layout = "_DashboardLayout";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
+    type="text/css" />
+<script type="text/javascript" src="~/sweetalertlocal/sweetalerts.js"></script>
+
+
+<div class="page-content" id="viewDiv">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Persons List</h4>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a>Persons</a></li>
+                            <li class="breadcrumb-item active"> List</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card" id="invoiceList">
+                    <div class="card-header border-0">
+                        <div class="d-flex align-items-center">
+                            <h5 class="card-title mb-0 flex-grow-1">@ViewBag.PageTitle</h5>
+                            <div class="flex-shrink-0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body bg-soft-light border border-dashed border-start-0 border-end-0">
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-xxl-5 col-sm-12">
+                                    <div class="search-box">
+                                        <label>Upload Persons</label>
+                                        <input class="form-control-file" type="file" id="fileUploader"
+                                            name="fileUploader" accept=".xls, .xlsx,.csv" />
+
+                                    </div>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-3 col-sm-4">
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-3 col-sm-4">
+
+                                </div>
+                                <!--end col-->
+
+                                <div class="col-xxl-1 col-sm-4">
+
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <div class="table-responsive table-card">
+                                <table class="table align-middle table-nowrap" id="invoiceTable">
+                                    <thead class="text-muted">
+                                        <tr>
+
+                                            <th class="sort text-uppercase" data-sort="customer_name">
+                                                Identity
+                                            </th>
+                                            <th class="text-uppercase">Firstname</th>
+                                            <th class="text-uppercase">Surname</th>
+                                            <th class="text-uppercase">Age</th>
+                                            <th class="text-uppercase">Sex</th>
+                                            <th class="text-uppercase">Mobile</th>
+                                            <th class="text-uppercase">Active</th>
+                                            <th class="text-uppercase">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="list form-check-all fileData">
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="d-flex justify-content-end mt-3">
+                                <div class="pagination-wrap hstack gap-2">
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="page-content" id="editDiv">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Persons Edit</h4>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a>Persons</a></li>
+                            <li class="breadcrumb-item active"> Edit</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <label class="form-label"> FIRST NAME</label>
+                                                <input type="text" class="form-control" id="firstName" required>
+
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label"> SURNAME</label>
+                                                <input type="text" class="form-control" id="surName" required>
+
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">AGE</label>
+                                                <input type="text" class="form-control" id="age" required>
+
+                                            </div>
+                                             <div class="mb-3">
+                                                <label class="form-label">ACTIVE</label>
+                                                <select id="statuss" class="form-control" required name="status">
+                                                    <option value="TRUE">TRUE</option>
+                                                    <option value="FALSE">FALSE</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">SEX</label>
+                                                <select id="sex" class="form-control" required name="sex">
+                                                    <option value="M">M</option>
+                                                    <option value="F">F</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">MOBILE</label>
+                                                <input type="text" class="form-control" id="mobile" required>
+
+                                            </div>
+                                           
+
+                                      
+
+                                        <div class="text-end mb-3">
+                                            <input type="submit" class="btn btn-primary w-sm" value="Edit"
+                                                onclick="EditData()">
+                                            &nbsp;&nbsp;
+                                            <a onclick="ViewAllItem()" class="btn btn-info  w-sm">Back to List</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.getElementById("editDiv").style.display = 'none';
+    document.getElementById("viewDiv").style.display = 'block';
+    function editItem(Identity) {
+        var data = JSON.parse(sessionStorage.getItem("csvFileData") || "[]");
+        data = data.filter(function (obj) {
+            return obj.Identity === Identity;
+        });
+        sessionStorage.setItem('IdentityToEdit', Identity.toString());
+        document.getElementById("firstName").value = data[0].FirstName.toString();
+        document.getElementById("surName").value = data[0].Surname.toString();
+        document.getElementById("age").value = data[0].Age.toString();
+        document.getElementById("sex").value = data[0].Sex.toString().toUpperCase();
+        document.getElementById("mobile").value = data[0].Mobile.toString();
+        document.getElementById("statuss").value = data[0].Active===true?'TRUE':'FALSE';
+       // console.log(data[0].Active);
+        document.getElementById("editDiv").style.display = 'block';
+        document.getElementById("viewDiv").style.display = 'none';
+    }
+    function EditData() {
+        var firstName = document.getElementById("firstName").value;
+        var surName = document.getElementById("surName").value;
+        var age = document.getElementById("age").value;
+        var sexObj = document.getElementById("sex");
+        var sex = sexObj.options[sexObj.selectedIndex].value;
+        var mobile = document.getElementById("mobile").value;
+        var statusObj = document.getElementById("statuss");
+        var status = statusObj.options[statusObj.selectedIndex].value === 'TRUE'?true:false;
+        if (firstName === undefined || firstName === null || firstName === '') {
+            errorAlert('First name is required');
+            return;
+        }
+        if (surName === undefined || surName === null || surName === '') {
+            errorAlert('Surname is required');
+            return;
+        }
+        if (age === undefined || age === null || age === '' || isNaN(Number(age))) {
+            errorAlert('Age is required and must be a valid age');
+            return;
+        }
+        if (sex === undefined || sex === null || sex === '' || (sex.toLowerCase() !== 'm' && sex.toLowerCase() !== 'f')) {
+            errorAlert('Sex is required and must be either M or F');
+            return;
+        }
+        if (mobile === undefined || mobile === null || mobile === '' || isNaN(Number(mobile))) {
+            errorAlert('Mobile no is required and must be a valid no');
+            return;
+        }
+        if (status !== true && status !== false) {
+            errorAlert('Status is required and must be true or false');
+            return;
+        }
+        var data = JSON.parse(sessionStorage.getItem("csvFileData") || "[]");
+        data = data.filter(function (obj) {
+            return obj.Identity !== Number(sessionStorage.getItem('IdentityToEdit'))
+        });
+        var obj = {};
+        obj.Identity = Number(sessionStorage.getItem('IdentityToEdit'));
+        obj.Age = age;
+        obj.FirstName = firstName;
+        obj.Active = status;
+        obj.Mobile = mobile;
+        obj.Sex = sex;
+        obj.Surname = surName;
+        data.push(obj);
+        if (data.length) {
+            sessionStorage.setItem("csvFileData", JSON.stringify(data));
+            var tr;
+            $('.fileData').empty();
+            //Append each row to html table
+            for (var i = 0; i < JSON.parse(sessionStorage.getItem("csvFileData") || "[]").length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].FirstName + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Surname + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Age + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Sex.toUpperCase() + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Mobile + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Active + "</td>");
+                tr.append("<td>" + '<button  class="btn btn-info" onclick="ViewItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">View</button> &nbsp;<button  class="btn btn-warning" onclick="editItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">Edit</button> &nbsp;<button  class="btn btn-danger" onclick="deleteItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">Delete</button>' + "</td>");
+                $('.fileData').append(tr);
+            }
+            okSuccess('Edit is successful!');
+        } else {
+            $('.fileData').empty();
+            sessionStorage.removeItem('csvFileData');
+        }
+
+        document.getElementById("editDiv").style.display = 'none';
+        document.getElementById("viewDiv").style.display = 'block';
+
+
+    }
+    function readCsVFile(evt) {
+        showLoading();
+        var selectedFile = evt.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var data = event.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function (sheetName) {
+                var jsonArray = [];
+                var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                var json_object = JSON.stringify(XL_row_object);
+                jsonArray = JSON.parse(json_object);
+
+                for (var i = 0; i < jsonArray.length; i++) {
+
+                    if (jsonArray[i].Active !== true && jsonArray[i].Active !== false) {
+                        errorAlert('Status is required and must be true or false for person with Identity ' + jsonArray[i].Identity);
+                        return;
+                    }
+                    if (jsonArray[i].Age === undefined || jsonArray[i].Age === null || jsonArray[i].Age === '' || isNaN(Number(jsonArray[i].Age))) {
+                        errorAlert('Age is required and must be a valid age for person with Identity ' + jsonArray[i].Identity);
+                        return;
+                    }
+                    if (jsonArray[i].FirstName === undefined || jsonArray[i].FirstName === null || jsonArray[i].FirstName === '') {
+                        errorAlert('First name is required for person with Identity ' + jsonArray[i].Identity);
+                        return;
+                    }
+                    if (jsonArray[i].Surname === undefined || jsonArray[i].Surname === null || jsonArray[i].Surname === '') {
+                        errorAlert('Surname is required for person with Identity ' + jsonArray[i].Identity);
+                        return;
+                    }
+                    if (jsonArray[i].Mobile === undefined || jsonArray[i].Mobile === null || jsonArray[i].Mobile === '' || isNaN(Number(jsonArray[i].Mobile))) {
+                        errorAlert('Mobile no is required and must be a valid no for person with Identity ' + jsonArray[i].Identity);
+                        return;
+                    }
+                    if (jsonArray[i].Sex === undefined || jsonArray[i].Sex === null || jsonArray[i].Sex === '' || (jsonArray[i].Sex.toLowerCase() !== 'm' && jsonArray[i].Sex.toLowerCase() !== 'f')) {
+                        errorAlert('Sex is required and must be either M or F for person with Identity ' + jsonArray[i].Identity);
+                        return;
+                    }
+                }
+                var arrayOfData = [];
+                if (JSON.parse(sessionStorage.getItem("csvFileData") || "[]").length === 0) {
+                    arrayOfData = jsonArray;
+                }
+                if (JSON.parse(sessionStorage.getItem("csvFileData") || "[]").length > 0) {
+                    arrayOfData = [...JSON.parse(sessionStorage.getItem("csvFileData") || "[]"), ...jsonArray]
+                }
+                sessionStorage.setItem("csvFileData", JSON.stringify(arrayOfData));
+                if (JSON.parse(sessionStorage.getItem("csvFileData") || "[]").length > 0) {
+                    var tr;
+                    $('.fileData').empty();
+                    //Append each row to html table
+                    for (var i = 0; i < JSON.parse(sessionStorage.getItem("csvFileData") || "[]").length; i++) {
+                        tr = $('<tr/>');
+                                      tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].FirstName + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Surname + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Age + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Sex.toUpperCase() + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Mobile + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Active + "</td>");
+                        tr.append("<td>" + '<button  class="btn btn-info" onclick="ViewItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                            ')">View</button> &nbsp;<button  class="btn btn-warning" onclick="editItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                            ')">Edit</button> &nbsp;<button  class="btn btn-danger" onclick="deleteItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                            ')">Delete</button>' + "</td>");
+                        $('.fileData').append(tr);
+                        okSuccess('Upload is successful!');
+                        clearInput();
+                    }
+                } else {
+                    $('.fileData').empty();
+                    sessionStorage.removeItem('csvFileData');
+                }
+
+            });
+        };
+
+        reader.onerror = function (event) {
+            alert("File could not be read! Code " + event.target.error.code);
+        };
+
+        reader.readAsBinaryString(selectedFile);
+    }
+
+    document.getElementById('fileUploader').addEventListener('change', readCsVFile);
+</script>
+<script>
+    function clearInput() {
+        document.getElementById('fileUploader').value = null;
+    }
+</script>
+<script>
+    function errorAlert(msg) {
+        Swal.fire({
+            title: 'Error Alert',
+            text: msg,
+            type: 'error',
+            showCancelButton: true,
+            showConfirmButton: false,
+            cancelButtonColor: '#d33',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+        });
+        clearInput();
+    }
+</script>
+<script>
+
+    function ViewItem(Identity) {
+        var data = JSON.parse(sessionStorage.getItem("csvFileData") || "[]");
+        data = data.filter(function (obj) {
+            return obj.Identity === Identity;
+        });
+
+        if (data.length) {
+            sessionStorage.setItem("csvFileDataView", JSON.stringify(data));
+            var tr;
+            $('.fileData').empty();
+            //Append each row to html table
+            for (var i = 0; i < JSON.parse(sessionStorage.getItem("csvFileDataView") || "[]").length; i++) {
+                tr = $('<tr/>');
+                               tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].FirstName + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Surname + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Age + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Sex.toUpperCase() + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Mobile + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Active + "</td>");
+                tr.append("<td>" + '<button  class="btn btn-primary" onclick="ViewAllItem()">View All</button> ' + "</td>");
+                $('.fileData').append(tr);
+            }
+        } else {
+            $('.fileData').empty();
+            sessionStorage.removeItem('csvFileDataView');
+        }
+
+    }
+
+    function ViewAllItem() {
+        document.getElementById("editDiv").style.display = 'none';
+        document.getElementById("viewDiv").style.display = 'block';
+        var data = JSON.parse(sessionStorage.getItem("csvFileData") || "[]");
+        if (data.length) {
+            sessionStorage.setItem("csvFileData", JSON.stringify(data));
+            var tr;
+            $('.fileData').empty();
+            //Append each row to html table
+            for (var i = 0; i < JSON.parse(sessionStorage.getItem("csvFileData") || "[]").length; i++) {
+                tr = $('<tr/>');
+                              tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].FirstName + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Surname + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Age + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Sex.toUpperCase() + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Mobile + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Active + "</td>");
+                tr.append("<td>" + '<button  class="btn btn-info" onclick="ViewItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">View</button> &nbsp;<button  class="btn btn-warning" onclick="editItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">Edit</button> &nbsp;<button  class="btn btn-danger" onclick="deleteItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">Delete</button>' + "</td>");
+                $('.fileData').append(tr);
+            }
+        } else {
+            $('.fileData').empty();
+            sessionStorage.removeItem('csvFileData');
+        }
+    }
+    function deleteFinally() {
+        var data = JSON.parse(sessionStorage.getItem("csvFileData") || "[]");
+        data = data.filter(function (obj) {
+            return obj.Identity !== Number(sessionStorage.getItem('Identity'))
+        });
+
+        if (data.length) {
+            sessionStorage.setItem("csvFileData", JSON.stringify(data));
+            var tr;
+            $('.fileData').empty();
+            //Append each row to html table
+            for (var i = 0; i < JSON.parse(sessionStorage.getItem("csvFileData") || "[]").length; i++) {
+                tr = $('<tr/>');
+                              tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].FirstName + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Surname + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Age + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Sex.toUpperCase() + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Mobile + "</td>");
+                tr.append("<td>" + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Active + "</td>");
+                tr.append("<td>" + '<button  class="btn btn-info" onclick="ViewItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">View</button> &nbsp;<button  class="btn btn-warning" onclick="editItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">Edit</button> &nbsp;<button  class="btn btn-danger" onclick="deleteItem(' + JSON.parse(sessionStorage.getItem("csvFileData") || "[]")[i].Identity +
+                    ')">Delete</button>' + "</td>");
+                $('.fileData').append(tr);
+                okSuccess('Delete is successful!');
+            }
+        } else {
+            $('.fileData').empty();
+            sessionStorage.removeItem('csvFileData');
+        }
+    }
+    function deleteItem(Identity) {
+        sessionStorage.setItem('Identity', Identity.toString());
+        Swal.fire({
+            title: 'Delete Person',
+            text: 'Are you sure ?',
+            type: 'info',
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+        }).then((result) => {
+            if (result.value) {
+                deleteFinally();
+            }
+        })
+    }
+
+    function showLoading() {
+        Swal.fire({
+            title: ' ',
+            text: 'Please wait ... ',
+            type: '',
+            showCancelButton: false,
+            showConfirmButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
+    }
+
+    function okSuccess(text) {
+        Swal.fire({
+            title: 'Upload Status',
+            text: text,
+            type: 'success',
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+        });
+    }
+</script>
